@@ -22,10 +22,12 @@ package cmd
 
 import (
 	"encoding/json"
-	"fmt"
+	"os"
+	//"fmt"
 
 	log "github.com/Sirupsen/logrus"
-	models "github.com/emccode/gorackhd/models"
+	"github.com/emccode/gorackhd/models"
+	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 )
 
@@ -58,6 +60,9 @@ func listNodes(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"Name", "ID", "type"})
+
 	for _, node := range resp.Payload {
 		n := &models.Node{}
 		buf, err := json.Marshal(node)
@@ -68,7 +73,9 @@ func listNodes(cmd *cobra.Command, args []string) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Printf("%s %s %s\n", *(n.Name), n.ID, n.Type)
+		table.Append([]string{*(n.Name), n.ID, n.Type})
+		//fmt.Printf("%s %s %s\n", *(n.Name), n.ID, n.Type)
 		//fmt.Printf("%#v\n\n", node)
 	}
+	table.Render()
 }
