@@ -24,11 +24,19 @@ import (
 	"fmt"
 	"os"
 
+	apiclientRedfish "github.com/emccode/gorackhd-redfish/client"
+	apiclientMonorail "github.com/emccode/gorackhd/client"
+	httptransport "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 var cfgFile string
+var clients struct {
+	rackMonorailClient *apiclientMonorail.Monorail
+	rackRedfishClient  *apiclientRedfish.Redfish
+}
 
 // This represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
@@ -37,9 +45,10 @@ var RootCmd = &cobra.Command{
 	Long: `rackhdcli is a command line interface to to interact with a
 RackHD server. One can query and modify various components of the RackHD
 setup and status`,
-// Uncomment the following line if your bare application
-// has an action associated with it:
-//	Run: func(cmd *cobra.Command, args []string) { },
+	PersistentPreRun: getApiClients,
+	// Uncomment the following line if your bare application
+	// has an action associated with it:
+	//	Run: func(cmd *cobra.Command, args []string) { },
 }
 
 // Execute adds all child commands to the root command sets flags appropriately.
@@ -71,11 +80,22 @@ func initConfig() {
 	}
 
 	viper.SetConfigName(".rackhdcli") // name of config file (without extension)
-	viper.AddConfigPath("$HOME")  // adding home directory as first search path
-	viper.AutomaticEnv()          // read in environment variables that match
+	viper.AddConfigPath("$HOME")      // adding home directory as first search path
+	viper.AutomaticEnv()              // read in environment variables that match
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
+}
+
+func getApiClients(cmd *cobra.Command, args []string) {
+
+	// create the transports
+	monorailTransport := httptransport.New("localhost:9090", "/api/1.1", []string{"http"})
+	redfishTransport := httptransport.New("localhost:9090", "/redfish/v1", []string{"http"})
+
+	// create the API clients
+	clients.rackMonorailClient = apiclientMonorail.New(monorailTransport, strfmt.Default)
+	clients.rackRedfishClient = apiclientRedfish.New(redfishTransport, strfmt.Default)
 }

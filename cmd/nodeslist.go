@@ -21,8 +21,11 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 
+	log "github.com/Sirupsen/logrus"
+	models "github.com/emccode/gorackhd/models"
 	"github.com/spf13/cobra"
 )
 
@@ -30,11 +33,8 @@ import (
 var nodeslistCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List Nodes in RackHD",
-	Long: "List Nodes in RackHD",
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO: Work your own magic here
-		fmt.Println("nodeslist called")
-	},
+	Long:  "List Nodes in RackHD",
+	Run:   listNodes,
 }
 
 func init() {
@@ -50,4 +50,25 @@ func init() {
 	// is called directly, e.g.:
 	// nodeslistCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
+}
+
+func listNodes(cmd *cobra.Command, args []string) {
+	resp, err := clients.rackMonorailClient.Nodes.GetNodes(nil, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, node := range resp.Payload {
+		n := &models.Node{}
+		buf, err := json.Marshal(node)
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = json.Unmarshal(buf, n)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("%s %s %s\n", *(n.Name), n.ID, n.Type)
+		//fmt.Printf("%#v\n\n", node)
+	}
 }
