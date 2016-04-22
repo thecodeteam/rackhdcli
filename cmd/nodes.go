@@ -21,7 +21,7 @@
 package cmd
 
 import (
-	"fmt"
+	//"fmt"
 
 	"github.com/spf13/cobra"
 )
@@ -32,10 +32,6 @@ var nodesCmd = &cobra.Command{
 	Short: "Interact with RackHD nodes",
 	Long: `Nodes are the elements that RackHD manages - compute servers,
 switches, etc.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO: Work your own magic here
-		fmt.Println("nodes called")
-	},
 }
 
 func init() {

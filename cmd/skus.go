@@ -21,7 +21,7 @@
 package cmd
 
 import (
-	"fmt"
+	//"fmt"
 
 	"github.com/spf13/cobra"
 )
@@ -30,11 +30,7 @@ import (
 var skusCmd = &cobra.Command{
 	Use:   "skus",
 	Short: "Interace with RackHD SKUs",
-	Long: `SKUs define a set of properties that categorize a Node.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO: Work your own magic here
-		fmt.Println("skus called")
-	},
+	Long:  `SKUs define a set of properties that categorize a Node.`,
 }
 
 func init() {
