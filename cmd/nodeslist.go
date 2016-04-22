@@ -61,7 +61,7 @@ func listNodes(cmd *cobra.Command, args []string) {
 	}
 
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"Name", "ID", "type"})
+	table.SetHeader([]string{"Name", "ID", "type", "SKU"})
 
 	for _, node := range resp.Payload {
 		n := &models.Node{}
@@ -73,7 +73,7 @@ func listNodes(cmd *cobra.Command, args []string) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		table.Append([]string{*(n.Name), n.ID, n.Type})
+		table.Append([]string{*(n.Name), n.ID, n.Type, n.Sku})
 		//fmt.Printf("%s %s %s\n", *(n.Name), n.ID, n.Type)
 		//fmt.Printf("%#v\n\n", node)
 	}
