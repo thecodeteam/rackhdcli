@@ -21,8 +21,13 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
 
+	log "github.com/Sirupsen/logrus"
+	"github.com/emccode/gorackhd/models"
+	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 )
 
@@ -30,11 +35,8 @@ import (
 var skuslistCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List RackHD SKUs",
-	Long: "List RackHD SKUs",
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO: Work your own magic here
-		fmt.Println("skuslist called")
-	},
+	Long:  "List RackHD SKUs",
+	Run:   listSkus,
 }
 
 func init() {
@@ -50,4 +52,29 @@ func init() {
 	// is called directly, e.g.:
 	// skuslistCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
+}
+
+func listSkus(cmd *cobra.Command, args []string) {
+	resp, err := clients.rackMonorailClient.Skus.GetSkus(nil, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"Name", "ID", "Discovery Workflow"})
+
+	for _, sku := range resp.Payload {
+		n := &models.Sku{}
+		buf, err := json.Marshal(sku)
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = json.Unmarshal(buf, n)
+		if err != nil {
+			log.Fatal(err)
+		}
+		table.Append([]string{n.Name, n.ID, n.DiscoveryGraphName})
+		fmt.Printf("%#v\n\n", sku)
+	}
+	table.Render()
 }
