@@ -24,6 +24,7 @@ import (
 	"encoding/json"
 	"os"
 	"fmt"
+	"strings"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/emccode/gorackhd/models"
@@ -42,6 +43,8 @@ var nodeslistCmd = &cobra.Command{
 
 var nodeSku string
 var shortList bool
+var withtags string
+var withouttags string
 
 func init() {
 	nodesCmd.AddCommand(nodeslistCmd)
@@ -56,6 +59,8 @@ func init() {
 	// is called directly, e.g.:
 	nodeslistCmd.Flags().StringVar(&nodeSku, "sku", "", "SKU id")
 	nodeslistCmd.Flags().BoolVarP(&shortList, "quiet", "q", false, "list only Node IDs")
+	nodeslistCmd.Flags().StringVar(&withtags, "with-tags", "", "only show nodes that have at least ONE of the given tags (comma separated)")
+	nodeslistCmd.Flags().StringVar(&withouttags, "without-tags", "", "only show nodes that do not have ANY of the given tags (comma separated)")
 }
 
 func listNodes(cmd *cobra.Command, args []string) {
@@ -77,7 +82,10 @@ func listNodes(cmd *cobra.Command, args []string) {
 	}
 
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"Name", "ID", "type", "SKU"})
+	table.SetHeader([]string{"Name", "ID", "type", "SKU", "Tags"})
+
+	withTagsSlice := strings.Split(withtags, ",")
+	withoutTagsSlice := strings.Split(withouttags, ",")
 
 	for _, node := range *payload {
 		n := &models.Node{}
@@ -89,7 +97,32 @@ func listNodes(cmd *cobra.Command, args []string) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		table.Append([]string{*(n.Name), n.ID, n.Type, n.Sku})
+		tags := getTags(&n.Tags)
+		if withtags != "" {
+			found := false
+			for _, a_tag := range tags {
+				if stringInSlice(a_tag, withTagsSlice){
+					found = true
+					break
+				}
+			}
+			if !found {
+				continue
+			}
+		}
+		if withouttags != "" {
+			found := false
+			for _, a_tag := range tags {
+				if stringInSlice(a_tag, withoutTagsSlice){
+					found = true
+					break
+				}
+			}
+			if found {
+				continue
+			}
+		}
+		table.Append([]string{*(n.Name), n.ID, n.Type, n.Sku, strings.Join(tags, ",")})
 		if shortList {
 			fmt.Println(n.ID)
 		}
@@ -99,4 +132,21 @@ func listNodes(cmd *cobra.Command, args []string) {
 	if !shortList {
 		table.Render()
 	}
+}
+
+func getTags(input *[]interface{}) []string {
+	tags := make([]string, len(*input))
+	for i, tag := range *input {
+		tags[i] = tag.(string)
+	}
+	return tags
+}
+
+func stringInSlice(a string, list []string) bool {
+    for _, b := range list {
+        if b == a {
+            return true
+        }
+    }
+    return false
 }
