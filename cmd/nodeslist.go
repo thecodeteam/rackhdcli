@@ -23,7 +23,7 @@ package cmd
 import (
 	"encoding/json"
 	"os"
-	//"fmt"
+	"fmt"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/emccode/gorackhd/models"
@@ -41,6 +41,7 @@ var nodeslistCmd = &cobra.Command{
 }
 
 var nodeSku string
+var shortList bool
 
 func init() {
 	nodesCmd.AddCommand(nodeslistCmd)
@@ -54,6 +55,7 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	nodeslistCmd.Flags().StringVar(&nodeSku, "sku", "", "SKU id")
+	nodeslistCmd.Flags().BoolVarP(&shortList, "quiet", "q", false, "list only Node IDs")
 }
 
 func listNodes(cmd *cobra.Command, args []string) {
@@ -88,8 +90,13 @@ func listNodes(cmd *cobra.Command, args []string) {
 			log.Fatal(err)
 		}
 		table.Append([]string{*(n.Name), n.ID, n.Type, n.Sku})
+		if shortList {
+			fmt.Println(n.ID)
+		}
 		//fmt.Printf("%s %s %s\n", *(n.Name), n.ID, n.Type)
 		//fmt.Printf("%#v\n\n", node)
 	}
-	table.Render()
+	if !shortList {
+		table.Render()
+	}
 }
