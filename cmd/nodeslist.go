@@ -27,6 +27,7 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/emccode/gorackhd/models"
+	"github.com/emccode/gorackhd/client/skus"
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 )
@@ -39,6 +40,8 @@ var nodeslistCmd = &cobra.Command{
 	Run:   listNodes,
 }
 
+var nodeSku string
+
 func init() {
 	nodesCmd.AddCommand(nodeslistCmd)
 
@@ -50,20 +53,31 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// nodeslistCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-
+	nodeslistCmd.Flags().StringVar(&nodeSku, "sku", "", "SKU id")
 }
 
 func listNodes(cmd *cobra.Command, args []string) {
-	resp, err := clients.rackMonorailClient.Nodes.GetNodes(nil, nil)
-	if err != nil {
-		log.Fatal(err)
+	var payload *[]interface{}
+	if nodeSku != "" {
+		skuParams := skus.GetSkusIdentifierNodesParams{}
+		skuParams.WithIdentifier(nodeSku)
+		resp, err := clients.rackMonorailClient.Skus.GetSkusIdentifierNodes(&skuParams, nil)
+		if err != nil {
+			log.Fatal(err)
+		}
+		payload = &resp.Payload
+	} else {
+		resp, err := clients.rackMonorailClient.Nodes.GetNodes(nil, nil)
+		if err != nil {
+			log.Fatal(err)
+		}
+		payload = &resp.Payload
 	}
 
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetHeader([]string{"Name", "ID", "type", "SKU"})
 
-	for _, node := range resp.Payload {
+	for _, node := range *payload {
 		n := &models.Node{}
 		buf, err := json.Marshal(node)
 		if err != nil {
