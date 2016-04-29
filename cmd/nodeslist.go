@@ -22,13 +22,13 @@ package cmd
 
 import (
 	"encoding/json"
-	"os"
 	"fmt"
+	"os"
 	"strings"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/emccode/gorackhd/models"
 	"github.com/emccode/gorackhd/client/skus"
+	"github.com/emccode/gorackhd/models"
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 )
@@ -101,7 +101,7 @@ func listNodes(cmd *cobra.Command, args []string) {
 		if withtags != "" {
 			found := false
 			for _, a_tag := range tags {
-				if stringInSlice(a_tag, withTagsSlice){
+				if stringInSlice(a_tag, withTagsSlice) {
 					found = true
 					break
 				}
@@ -113,7 +113,7 @@ func listNodes(cmd *cobra.Command, args []string) {
 		if withouttags != "" {
 			found := false
 			for _, a_tag := range tags {
-				if stringInSlice(a_tag, withoutTagsSlice){
+				if stringInSlice(a_tag, withoutTagsSlice) {
 					found = true
 					break
 				}
@@ -140,13 +140,4 @@ func getTags(input *[]interface{}) []string {
 		tags[i] = tag.(string)
 	}
 	return tags
-}
-
-func stringInSlice(a string, list []string) bool {
-    for _, b := range list {
-        if b == a {
-            return true
-        }
-    }
-    return false
 }
