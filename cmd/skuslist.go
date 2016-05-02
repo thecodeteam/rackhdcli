@@ -22,7 +22,7 @@ package cmd
 
 import (
 	"encoding/json"
-	"fmt"
+	//"fmt"
 	"os"
 
 	log "github.com/Sirupsen/logrus"
@@ -74,7 +74,6 @@ func listSkus(cmd *cobra.Command, args []string) {
 			log.Fatal(err)
 		}
 		table.Append([]string{n.Name, n.ID, n.DiscoveryGraphName})
-		fmt.Printf("%#v\n\n", sku)
 	}
 	table.Render()
 }
