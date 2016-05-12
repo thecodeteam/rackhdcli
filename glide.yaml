@@ -1,0 +1,11 @@
+package: github.com/codenrhoden/rackhdcli
+import:
+- package: github.com/emccode/gorackhd
+  subpackages:
+  - client
+  - models
+#- package: github.com/emccode/gorackhd-redfish
+#  subpackages:
+#  - client
+- package: github.com/spf13/cobra
+- package: github.com/spf13/viper
