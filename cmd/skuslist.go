@@ -21,12 +21,9 @@
 package cmd
 
 import (
-	"encoding/json"
-	//"fmt"
 	"os"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/emccode/gorackhd/models"
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 )
@@ -64,16 +61,7 @@ func listSkus(cmd *cobra.Command, args []string) {
 	table.SetHeader([]string{"Name", "ID", "Discovery Workflow"})
 
 	for _, sku := range resp.Payload {
-		n := &models.Sku{}
-		buf, err := json.Marshal(sku)
-		if err != nil {
-			log.Fatal(err)
-		}
-		err = json.Unmarshal(buf, n)
-		if err != nil {
-			log.Fatal(err)
-		}
-		table.Append([]string{n.Name, n.ID, n.DiscoveryGraphName})
+		table.Append([]string{sku.Name, sku.ID, sku.DiscoveryGraphName})
 	}
 	table.Render()
 }

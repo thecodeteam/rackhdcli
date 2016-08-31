@@ -21,11 +21,9 @@
 package cmd
 
 import (
-	"encoding/json"
 	"os"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/emccode/gorackhd/models"
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 )
@@ -63,16 +61,7 @@ func listTags(cmd *cobra.Command, args []string) {
 	table.SetHeader([]string{"Name"})
 
 	for _, tag := range resp.Payload {
-		n := &models.Tag{}
-		buf, err := json.Marshal(tag)
-		if err != nil {
-			log.Fatal(err)
-		}
-		err = json.Unmarshal(buf, n)
-		if err != nil {
-			log.Fatal(err)
-		}
-		table.Append([]string{*(n.Name)})
+		table.Append([]string{*(tag.Name)})
 		//fmt.Printf("%#v\n\n", tag)
 	}
 	table.Render()

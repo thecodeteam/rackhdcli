@@ -57,7 +57,7 @@ func init() {
 
 func lookupNode(cmd *cobra.Command, args []string) {
 	// do a lookup on the ID
-	resp, err := clients.rackMonorailClient.Lookups.GetLookups(&lookups.GetLookupsParams{Q: targetNode}, nil)
+	resp, err := clients.rackMonorailClient.Lookups.GetLookups(&lookups.GetLookupsParams{Q: &targetNode}, nil)
 	if err != nil {
 		log.Fatal(err)
 	}

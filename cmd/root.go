@@ -24,7 +24,6 @@ import (
 	"fmt"
 	"os"
 
-	//apiclientRedfish "github.com/emccode/gorackhd-redfish/client"
 	apiclientMonorail "github.com/emccode/gorackhd/client"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
@@ -93,11 +92,9 @@ func getApiClients(cmd *cobra.Command, args []string) {
 
 	// create the transports
 	monorailTransport := httptransport.New("localhost:9090", "/api/1.1", []string{"http"})
-	//redfishTransport := httptransport.New("localhost:9090", "/redfish/v1", []string{"http"})
 
 	// create the API clients
 	clients.rackMonorailClient = apiclientMonorail.New(monorailTransport, strfmt.Default)
-	//clients.rackRedfishClient = apiclientRedfish.New(redfishTransport, strfmt.Default)
 }
 
 func stringInSlice(a string, list []string) bool {

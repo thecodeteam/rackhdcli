@@ -21,7 +21,6 @@
 package cmd
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
@@ -64,7 +63,7 @@ func init() {
 }
 
 func listNodes(cmd *cobra.Command, args []string) {
-	var payload *[]interface{}
+	var payload []*models.Node
 	if nodeSku != "" {
 		skuParams := skus.GetSkusIdentifierNodesParams{}
 		skuParams.WithIdentifier(nodeSku)
@@ -72,13 +71,13 @@ func listNodes(cmd *cobra.Command, args []string) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		payload = &resp.Payload
+		payload = resp.Payload
 	} else {
 		resp, err := clients.rackMonorailClient.Nodes.GetNodes(nil, nil)
 		if err != nil {
 			log.Fatal(err)
 		}
-		payload = &resp.Payload
+		payload = resp.Payload
 	}
 
 	table := tablewriter.NewWriter(os.Stdout)
@@ -87,17 +86,8 @@ func listNodes(cmd *cobra.Command, args []string) {
 	withTagsSlice := strings.Split(withtags, ",")
 	withoutTagsSlice := strings.Split(withouttags, ",")
 
-	for _, node := range *payload {
-		n := &models.Node{}
-		buf, err := json.Marshal(node)
-		if err != nil {
-			log.Fatal(err)
-		}
-		err = json.Unmarshal(buf, n)
-		if err != nil {
-			log.Fatal(err)
-		}
-		tags := getTags(&n.Tags)
+	for _, node := range payload {
+		tags := getTags(&node.Tags)
 		if withtags != "" {
 			found := false
 			for _, a_tag := range tags {
@@ -122,9 +112,9 @@ func listNodes(cmd *cobra.Command, args []string) {
 				continue
 			}
 		}
-		table.Append([]string{*(n.Name), n.ID, n.Type, n.Sku, strings.Join(tags, ",")})
+		table.Append([]string{*(node.Name), node.ID, node.Type, node.Sku, strings.Join(tags, ",")})
 		if shortList {
-			fmt.Println(n.ID)
+			fmt.Println(node.ID)
 		}
 		//fmt.Printf("%s %s %s\n", *(n.Name), n.ID, n.Type)
 		//fmt.Printf("%#v\n\n", node)
