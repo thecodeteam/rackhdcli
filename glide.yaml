@@ -1,7 +1,6 @@
 package: github.com/codenrhoden/rackhdcli
 import:
-- package: github.com/emccode/gorackhd
-  ref: d412a5a1c37f6560bf97c9421cbcce80c5b4bf52
+- package: github.com/codedellemc/gorackhd
   subpackages:
   - client
   - models

@@ -24,7 +24,7 @@ import (
 	//"fmt"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/emccode/gorackhd/client/nodes"
+	"github.com/codedellemc/gorackhd/client/nodes"
 	"github.com/spf13/cobra"
 )
 
@@ -32,8 +32,8 @@ import (
 var nodestagCmd = &cobra.Command{
 	Use:   "tag",
 	Short: "Tag a node",
-	Long: `Apply a tag to the given node`,
-	Run: tagNode,
+	Long:  `Apply a tag to the given node`,
+	Run:   tagNode,
 }
 
 var targetNode string

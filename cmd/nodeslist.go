@@ -26,8 +26,8 @@ import (
 	"strings"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/emccode/gorackhd/client/skus"
-	"github.com/emccode/gorackhd/models"
+	"github.com/codedellemc/gorackhd/client/skus"
+	"github.com/codedellemc/gorackhd/models"
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 )

@@ -1,10 +1,10 @@
-hash: 22c77a7991b0be5331c9cadcf39f7d8c3605997b992ac18f69fee7498a4e48c1
-updated: 2016-08-31T11:45:32.93218938-07:00
+hash: e8d3bb88f540946c9678c651d6dde20d7beb1da79ceea21f990bb26266795ff9
+updated: 2016-09-08T10:33:28.398412305-07:00
 imports:
 - name: github.com/asaskevich/govalidator
   version: 593d64559f7600f29581a3ee42177f5dbded27a9
-- name: github.com/emccode/gorackhd
-  version: d412a5a1c37f6560bf97c9421cbcce80c5b4bf52
+- name: github.com/codedellemc/gorackhd
+  version: 92f5e99ea8af0d4afbd96ba3573bd0405be28975
   subpackages:
   - client
   - client/catalog
@@ -45,7 +45,7 @@ imports:
 - name: github.com/go-openapi/loads
   version: 18441dfa706d924a39a030ee2c3b1d8d81917b38
 - name: github.com/go-openapi/runtime
-  version: b5bd5f10b3ecfc154ac2bdf3cfe5119d313a81fb
+  version: 18efe8c11921c0ddabc8e91554971d6db1f91c7c
   subpackages:
   - client
 - name: github.com/go-openapi/spec
@@ -55,9 +55,9 @@ imports:
 - name: github.com/go-openapi/swag
   version: 0e04f5e499b19bf51031c01a00f098f25067d8dc
 - name: github.com/go-openapi/validate
-  version: deaf2c9013bc1a7f4c774662259a506ba874d80f
+  version: 14872542e3bd537d6d6b9976e066ff658d41975f
 - name: github.com/hashicorp/hcl
-  version: baeb59c710717b06aac1dbe2270e8192ec593244
+  version: 99df0eb941dd8ddbc83d3f3605a34f6a686ac85e
   subpackages:
   - hcl/ast
   - hcl/parser
@@ -72,7 +72,7 @@ imports:
 - name: github.com/kr/fs
   version: 2788f0dbd16903de03cb8186e5c7d97b69ad387b
 - name: github.com/magiconair/properties
-  version: 61b492c03cf472e0c6419be5899b8e0dc28b1b88
+  version: 0723e352fa358f9322c938cc2dadda874e9151a9
 - name: github.com/mailru/easyjson
   version: 34560e358dc05e2c28f6fda2f5c9e7494a4b9b19
   subpackages:
@@ -88,11 +88,11 @@ imports:
 - name: github.com/pelletier/go-buffruneio
   version: df1e16fde7fc330a0ca68167c23bf7ed6ac31d6d
 - name: github.com/pelletier/go-toml
-  version: 5a62685873ef617233ab5f1b825a6e4a758e16cf
+  version: 31055c2ff0bb0c7f9095aec0d220aed21108121e
 - name: github.com/pkg/errors
   version: 17b591df37844cde689f4d5813e5cea0927d8dd2
 - name: github.com/pkg/sftp
-  version: a71e8f580e3b622ebff585309160b1cc549ef4d2
+  version: 8197a2e580736b78d704be0fc47b2324c0591a32
 - name: github.com/PuerkitoBio/purell
   version: 8a290539e2e8629dbc4e6bad948158f790ec31f4
 - name: github.com/PuerkitoBio/urlesc
@@ -111,28 +111,28 @@ imports:
 - name: github.com/spf13/jwalterweatherman
   version: 33c24e77fb80341fe7130ee7c594256ff08ccc46
 - name: github.com/spf13/pflag
-  version: 103ce5cd2042f2fe629c1957abb64ab3e7f50235
+  version: 6fd2ff4ff8dfcdf5556fbdc0ac0284408274b1a7
 - name: github.com/spf13/viper
   version: 16990631d4aa7e38f73dbbbf37fa13e67c648531
 - name: golang.org/x/crypto
-  version: 33b41827e673eff8a3b8c2f2089bf0d14d99e1ef
+  version: 9e590154d2353f3f5e1b24da7275686040dcf491
   subpackages:
   - curve25519
   - ed25519
   - ed25519/internal/edwards25519
   - ssh
 - name: golang.org/x/net
-  version: 9bc2a3340c92c17a20edcd0080e93851ed58f5d5
+  version: 9313baa13d9262e49d07b20ed57dceafcd7240cc
   subpackages:
   - context
   - context/ctxhttp
   - idna
 - name: golang.org/x/sys
-  version: a646d33e2ee3172a661fc09bca23bb4889a41bc8
+  version: 30de6d19a3bd89a5f38ae4028e23aaa5582648af
   subpackages:
   - unix
 - name: golang.org/x/text
-  version: 09c7ea1fcb3345da09be5a32c9c52303acd1dc2c
+  version: 1e65e9bf72c307081cea196f47ef37aed17eb316
   subpackages:
   - cases
   - internal/tag

@@ -25,7 +25,7 @@ import (
 	"os"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/emccode/gorackhd/client/lookups"
+	"github.com/codedellemc/gorackhd/client/lookups"
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 )

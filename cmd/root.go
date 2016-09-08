@@ -24,7 +24,7 @@ import (
 	"fmt"
 	"os"
 
-	apiclientMonorail "github.com/emccode/gorackhd/client"
+	apiclientMonorail "github.com/codedellemc/gorackhd/client"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 	"github.com/spf13/cobra"
