@@ -34,7 +34,6 @@ import (
 var cfgFile string
 var clients struct {
 	rackMonorailClient *apiclientMonorail.Monorail
-	//rackRedfishClient  *apiclientRedfish.Redfish
 }
 
 // This represents the base command when called without any subcommands
