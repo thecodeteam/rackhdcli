@@ -33,6 +33,7 @@ import (
 
 var cfgFile string
 var endpoint string
+var transport string
 var clients struct {
 	rackMonorailClient *apiclientMonorail.Monorail
 }
@@ -68,6 +69,7 @@ func init() {
 
 	//RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.rackhdcli.yaml)")
 	RootCmd.PersistentFlags().StringVar(&endpoint, "endpoint", "localhost:9090", "API endoint of RackHD")
+	RootCmd.PersistentFlags().StringVar(&transport, "transport", "http", "http or https")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
@@ -93,7 +95,7 @@ func initConfig() {
 func getApiClients(cmd *cobra.Command, args []string) {
 
 	// create the transports
-	monorailTransport := httptransport.New(endpoint, "/api/1.1", []string{"http"})
+	monorailTransport := httptransport.New(endpoint, "/api/1.1", []string{transport})
 
 	// create the API clients
 	clients.rackMonorailClient = apiclientMonorail.New(monorailTransport, strfmt.Default)
