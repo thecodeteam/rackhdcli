@@ -59,7 +59,7 @@ Using config file: /Users/travis/.rackhdcli.yaml
 ```
 
 ## Licensing
-gorackhd is freely distributed under the [MIT License](http://codedellemc.github.io/sampledocs/LICENSE "LICENSE"). See LICENSE for details.
+rackhdcli is freely distributed under the [MIT License](http://codedellemc.github.io/sampledocs/LICENSE "LICENSE"). See LICENSE for details.
 
 ## Support
 Please file bugs and issues on the Github issues page for this project. This is to help keep track and document everything related to this repo. For general discussions and further support you can join the [{code} by Dell EMC Community slack team](http://community.codedellemc.com/) and join the **#rackhd** channel. The code and documentation are released with no warranties or SLAs and are intended to be supported through a community driven process.
