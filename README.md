@@ -1,4 +1,4 @@
-# RackHDCLI [![Build Status](https://travis-ci.org/codenrhoden/rackhdcli.svg?branch=master)](https://travis-ci.org/codenrhoden/rackhdcli)
+# RackHDCLI [![Build Status](https://travis-ci.org/codedellemc/rackhdcli.svg?branch=master)](https://travis-ci.org/codedellemc/rackhdcli)
 A Go-based CLI for RackHD
 
 ## Description
@@ -14,8 +14,8 @@ Binaries are not yet provided, but can be built with the following commands:
 
 ```
 go get github.com/Masterminds/glide
-go get -d github.com/codenrhoden/rackhdcli
-cd $GOPATH/src/github.com/codenrhoden/rackhdcli
+go get -d github.com/codedellemc/rackhdcli
+cd $GOPATH/src/github.com/codedellemc/rackhdcli
 glide install
 go install
 ```

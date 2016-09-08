@@ -1,4 +1,4 @@
-package: github.com/codenrhoden/rackhdcli
+package: github.com/codedellemc/rackhdcli
 import:
 - package: github.com/codedellemc/gorackhd
   subpackages:

@@ -20,7 +20,7 @@
 
 package main
 
-import "github.com/codenrhoden/rackhdcli/cmd"
+import "github.com/codedellemc/rackhdcli/cmd"
 
 func main() {
 	cmd.Execute()
