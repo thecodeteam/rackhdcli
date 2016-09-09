@@ -21,27 +21,44 @@
 package cmd
 
 import (
+	"os"
+
+	log "github.com/Sirupsen/logrus"
+	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 )
 
-// tagsCmd represents the tags command
 var tagsCmd = &cobra.Command{
 	Use:   "tags",
 	Short: "Interact with tags on RackHD",
 	Long:  "Interact with tags on RackHD",
 }
 
+var tagslistCmd = &cobra.Command{
+	Use:   "list",
+	Short: "List tags in RackHD",
+	Long:  "List tags in RackHD",
+	Run:   listTags,
+}
+
 func init() {
 	RootCmd.AddCommand(tagsCmd)
 
-	// Here you will define your flags and configuration settings.
+	tagsCmd.AddCommand(tagslistCmd)
+}
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// tagsCmd.PersistentFlags().String("foo", "", "A help for foo")
+func listTags(cmd *cobra.Command, args []string) {
+	resp, err := clients.rackMonorailClient.Tags.GetTags(nil, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// tagsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"Name"})
 
+	for _, tag := range resp.Payload {
+		table.Append([]string{*(tag.Name)})
+		//fmt.Printf("%#v\n\n", tag)
+	}
+	table.Render()
 }
