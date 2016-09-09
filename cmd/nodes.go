@@ -115,8 +115,8 @@ func listNodes(cmd *cobra.Command, args []string) {
 		tags := getTags(&node.Tags)
 		if withtags != "" {
 			found := false
-			for _, a_tag := range tags {
-				if stringInSlice(a_tag, withTagsSlice) {
+			for _, tag := range tags {
+				if stringInSlice(tag, withTagsSlice) {
 					found = true
 					break
 				}
@@ -127,8 +127,8 @@ func listNodes(cmd *cobra.Command, args []string) {
 		}
 		if withouttags != "" {
 			found := false
-			for _, a_tag := range tags {
-				if stringInSlice(a_tag, withoutTagsSlice) {
+			for _, tag := range tags {
+				if stringInSlice(tag, withoutTagsSlice) {
 					found = true
 					break
 				}
