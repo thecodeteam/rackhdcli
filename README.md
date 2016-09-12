@@ -8,9 +8,15 @@ Currently the CLI supports the **1.1** version of the RackHD API, and can list n
 
 RackHDCLI is built on top of [gorackhd](https://github.com/codedellemc/gorackhd).
 
+## Installation
+
+Binaries are provided for Linux and Mac OS X.
+```
+curl -L https://github.com/codedellemc/rackhdcli/releases/download/v0.1.0/rackhdcli.`uname -s`-`uname -m` > /usr/local/bin/rackhdcli && chmod +x /usr/local/bin/rackhdcli
+```
 ## Building
 
-Binaries are not yet provided, but can be built with the following commands:
+Binaries can be built and installed from source with the following commands:
 
 ```
 go get github.com/Masterminds/glide
