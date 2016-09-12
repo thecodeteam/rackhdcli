@@ -38,14 +38,14 @@ var clients struct {
 	rackMonorailClient *apiclientMonorail.Monorail
 }
 
-// This represents the base command when called without any subcommands
+// RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
 	Use:   "rackhdcli",
 	Short: "A CLI for interacting with RackHD",
 	Long: `rackhdcli is a command line interface to to interact with a
 RackHD server. One can query and modify various components of the RackHD
 setup and status`,
-	PersistentPreRun: getApiClients,
+	PersistentPreRun: getAPIClients,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	//	Run: func(cmd *cobra.Command, args []string) { },
@@ -92,7 +92,7 @@ func initConfig() {
 	}
 }
 
-func getApiClients(cmd *cobra.Command, args []string) {
+func getAPIClients(cmd *cobra.Command, args []string) {
 
 	// create the transports
 	monorailTransport := httptransport.New(endpoint, "/api/1.1", []string{transport})

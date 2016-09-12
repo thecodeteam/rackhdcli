@@ -21,29 +21,43 @@
 package cmd
 
 import (
-	//"fmt"
+	"os"
 
+	"github.com/olekukonko/tablewriter"
+	log "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
-// skusCmd represents the skus command
 var skusCmd = &cobra.Command{
 	Use:   "skus",
 	Short: "Interace with RackHD SKUs",
 	Long:  `SKUs define a set of properties that categorize a Node.`,
 }
 
+var skuslistCmd = &cobra.Command{
+	Use:   "list",
+	Short: "List RackHD SKUs",
+	Long:  "List RackHD SKUs",
+	Run:   listSkus,
+}
+
 func init() {
 	RootCmd.AddCommand(skusCmd)
 
-	// Here you will define your flags and configuration settings.
+	skusCmd.AddCommand(skuslistCmd)
+}
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// skusCmd.PersistentFlags().String("foo", "", "A help for foo")
+func listSkus(cmd *cobra.Command, args []string) {
+	resp, err := clients.rackMonorailClient.Skus.GetSkus(nil, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// skusCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"Name", "ID", "Discovery Workflow"})
 
+	for _, sku := range resp.Payload {
+		table.Append([]string{sku.Name, sku.ID, sku.DiscoveryGraphName})
+	}
+	table.Render()
 }
